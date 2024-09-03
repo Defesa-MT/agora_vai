@@ -22,13 +22,13 @@ Este repositório contém um projeto voltado para o monitoramento e análise de 
 ## Imagens do Projeto
 
 ### Exemplo de Estrutura de Arquivos
-![Estrutura de Arquivos](./images/estrutura-arquivos.png)
+
 
 ### Mapa de Incêndios e Desmatamento
-![Mapa de Incêndios e Desmatamento](./images/mapa-incendios-desmatamento.png)
+
 
 ### Janela de Informações Detalhadas
-![Informações Detalhadas](./images/informacoes-detalhadas.png)
+
 
 ## Como Contribuir
 
