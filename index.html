@@ -48,7 +48,7 @@
         <script>
         var map = L.map('map', {
             zoomControl:false, maxZoom:28, minZoom:1
-        }).fitBounds([[-18.12299903193627,-58.49121447735751],[-15.3161994439489,-53.75947027158286]]);
+        }).fitBounds([[-16.685665919359792,-58.521445979367634],[-13.878866331372421,-53.78970177359299]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -232,12 +232,16 @@
         function style_CAMADASDC_3_0() {
             return {
                 pane: 'pane_CAMADASDC_3',
-        rotationAngle: 0.0,
-        rotationOrigin: 'center center',
-        icon: L.icon({
-            iconUrl: 'markers/CAMADASDC_3.svg',
-            iconSize: [19.000000000000004, 19.000000000000004]
-        }),
+                radius: 10.0,
+                opacity: 1,
+                color: 'rgba(255,255,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,0,1.0)',
                 interactive: true,
             }
         }
@@ -256,7 +260,7 @@
                     feature: feature,
                     variables: {}
                 };
-                return L.marker(latlng, style_CAMADASDC_3_0(feature));
+                return L.circleMarker(latlng, style_CAMADASDC_3_0(feature));
             },
         });
         bounds_group.addLayer(layer_CAMADASDC_3);
@@ -318,12 +322,16 @@
         function style_AvioPantanal_4_0() {
             return {
                 pane: 'pane_AvioPantanal_4',
-        rotationAngle: 0.0,
-        rotationOrigin: 'center center',
-        icon: L.icon({
-            iconUrl: 'markers/AvioPantanal_4.svg',
-            iconSize: [15.2, 15.2]
-        }),
+                radius: 3.999999999999997,
+                opacity: 1,
+                color: 'rgba(255,127,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
                 interactive: true,
             }
         }
@@ -342,7 +350,7 @@
                     feature: feature,
                     variables: {}
                 };
-                return L.marker(latlng, style_AvioPantanal_4_0(feature));
+                return L.circleMarker(latlng, style_AvioPantanal_4_0(feature));
             },
         });
         bounds_group.addLayer(layer_AvioPantanal_4);
@@ -404,12 +412,16 @@
         function style_AvioRosrio_5_0() {
             return {
                 pane: 'pane_AvioRosrio_5',
-        rotationAngle: 0.0,
-        rotationOrigin: 'center center',
-        icon: L.icon({
-            iconUrl: 'markers/AvioRosrio_5.svg',
-            iconSize: [15.2, 15.2]
-        }),
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,127,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
                 interactive: true,
             }
         }
@@ -428,7 +440,7 @@
                     feature: feature,
                     variables: {}
                 };
-                return L.marker(latlng, style_AvioRosrio_5_0(feature));
+                return L.circleMarker(latlng, style_AvioRosrio_5_0(feature));
             },
         });
         bounds_group.addLayer(layer_AvioRosrio_5);
@@ -949,12 +961,16 @@
         function style_Focos24hfocos_qmd_inpe_2024_09_03_2024_09_04_14601246_9_0() {
             return {
                 pane: 'pane_Focos24hfocos_qmd_inpe_2024_09_03_2024_09_04_14601246_9',
-        rotationAngle: 0.0,
-        rotationOrigin: 'center center',
-        icon: L.icon({
-            iconUrl: 'markers/Focos24hfocos_qmd_inpe_2024_09_03_2024_09_04_14601246_9.svg',
-            iconSize: [11.399999999999999, 11.399999999999999]
-        }),
+                radius: 3.9999999999999987,
+                opacity: 1,
+                color: 'rgba(255,127,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,127,0,1.0)',
                 interactive: true,
             }
         }
@@ -973,7 +989,7 @@
                     feature: feature,
                     variables: {}
                 };
-                return L.marker(latlng, style_Focos24hfocos_qmd_inpe_2024_09_03_2024_09_04_14601246_9_0(feature));
+                return L.circleMarker(latlng, style_Focos24hfocos_qmd_inpe_2024_09_03_2024_09_04_14601246_9_0(feature));
             },
         });
         var cluster_Focos24hfocos_qmd_inpe_2024_09_03_2024_09_04_14601246_9 = new L.MarkerClusterGroup({showCoverageOnHover: false,
@@ -1087,12 +1103,16 @@
         function style_focos12hfocos_qmd_inpe_2024_09_04_2024_09_04_09685193_10_0() {
             return {
                 pane: 'pane_focos12hfocos_qmd_inpe_2024_09_04_2024_09_04_09685193_10',
-        rotationAngle: 0.0,
-        rotationOrigin: 'center center',
-        icon: L.icon({
-            iconUrl: 'markers/focos12hfocos_qmd_inpe_2024_09_04_2024_09_04_09685193_10.svg',
-            iconSize: [11.400000000000002, 11.400000000000002]
-        }),
+                radius: 3.9999999999999987,
+                opacity: 1,
+                color: 'rgba(255,1,1,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,1,9,1.0)',
                 interactive: true,
             }
         }
@@ -1111,7 +1131,7 @@
                     feature: feature,
                     variables: {}
                 };
-                return L.marker(latlng, style_focos12hfocos_qmd_inpe_2024_09_04_2024_09_04_09685193_10_0(feature));
+                return L.circleMarker(latlng, style_focos12hfocos_qmd_inpe_2024_09_04_2024_09_04_09685193_10_0(feature));
             },
         });
         var cluster_focos12hfocos_qmd_inpe_2024_09_04_2024_09_04_09685193_10 = new L.MarkerClusterGroup({showCoverageOnHover: false,
