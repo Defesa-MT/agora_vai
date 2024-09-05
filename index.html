@@ -46,7 +46,7 @@
         <script>
         var map = L.map('map', {
             zoomControl:false, maxZoom:28, minZoom:1
-        }).fitBounds([[-16.60504858066613,-57.76956590216351],[-15.201648786672443,-55.40369379927604]]);
+        }).fitBounds([[-17.918473666296347,-57.84961768554745],[-15.111674078308976,-53.117873479772804]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -226,16 +226,12 @@
         function style_AvioPantanal_3_0() {
             return {
                 pane: 'pane_AvioPantanal_3',
-                radius: 4.0,
-                opacity: 1,
-                color: 'rgba(255,127,0,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(255,255,255,1.0)',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/AvioPantanal_3.svg',
+            iconSize: [22.80000000000001, 22.80000000000001]
+        }),
                 interactive: true,
             }
         }
@@ -254,7 +250,7 @@
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_AvioPantanal_3_0(feature));
+                return L.marker(latlng, style_AvioPantanal_3_0(feature));
             },
         });
         var cluster_AvioPantanal_3 = new L.MarkerClusterGroup({showCoverageOnHover: false,
@@ -320,16 +316,12 @@
         function style_AvioRosrio_4_0() {
             return {
                 pane: 'pane_AvioRosrio_4',
-                radius: 4.0,
-                opacity: 1,
-                color: 'rgba(255,127,0,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(255,255,255,1.0)',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/AvioRosrio_4.svg',
+            iconSize: [19.00000000000001, 19.00000000000001]
+        }),
                 interactive: true,
             }
         }
@@ -348,7 +340,7 @@
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_AvioRosrio_4_0(feature));
+                return L.marker(latlng, style_AvioRosrio_4_0(feature));
             },
         });
         var cluster_AvioRosrio_4 = new L.MarkerClusterGroup({showCoverageOnHover: false,
