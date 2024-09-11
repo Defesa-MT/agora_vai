@@ -11,33 +11,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Verifica o repositório
       - name: Checkout the repository
         uses: actions/checkout@v2
 
-      # Configura o Node.js (ajuste a versão conforme a sua necessidade)
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'  # Ou outra versão de Node.js que seu projeto usa
+          node-version: '14'
 
-      # Instala as dependências
       - name: Install dependencies
         run: npm install
 
-      # Adiciona as variáveis de ambiente a partir dos secrets que você criou
-      - name: Set environment variables
+      # Autenticar na API e salvar a resposta em um arquivo JSON estático
+      - name: Authenticate and fetch API data
         run: |
           echo "API_IDENTIFIER=${{ secrets.API_IDENTIFIER }}" >> $GITHUB_ENV
           echo "API_PASSWORD=${{ secrets.API_PASSWORD }}" >> $GITHUB_ENV
+          node scripts/fetchData.js  # Esse arquivo vai fazer a autenticação e salvar os dados
 
-      # Executa o build do projeto
       - name: Build the project
-        run: npm run build  # Altere este comando caso tenha outro comando para build
+        run: npm run build
 
-      # Faz o deploy no GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}  # Token para autenticação no GitHub
-          publish_dir: ./public  # Diretório gerado pelo build (altere se necessário)
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
