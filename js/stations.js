@@ -1,7 +1,13 @@
-// Função para adicionar as estações ao mapa usando clusters com estilos personalizados
 function addStationsToMap(map) {
-    // Carregar o arquivo JSON estático
-    fetch('/data/apiData.json')
+    // Detecta se está rodando no GitHub Pages ou localmente
+    const isGitHubPages = window.location.hostname === 'iz-brum.github.io';
+    
+    const dataUrl = isGitHubPages
+        ? '/data/stationsData.json'  // Se for GitHub Pages, usa o arquivo JSON estático
+        : 'http://localhost:3000/stations';  // Se for local, usa o backend local
+
+    // Faz o fetch dos dados
+    fetch(dataUrl)
         .then(response => response.json())
         .then(stations => {
             console.log('Dados carregados:', stations);
@@ -53,7 +59,7 @@ function addStationsToMap(map) {
 
         })
         .catch(error => {
-            console.error('Erro ao carregar estações:', error);
+            console.error('Erro ao carregar estações:', error); 
         });
 }
 
