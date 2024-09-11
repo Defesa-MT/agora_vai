@@ -1,0 +1,43 @@
+name: Deploy to GitHub Pages
+
+# Quando o workflow será acionado: sempre que houver push na branch 'main'
+on:
+  push:
+    branches:
+      - feature-atualizacoes-estacoes 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Verifica o repositório
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+
+      # Configura o Node.js (ajuste a versão conforme a sua necessidade)
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'  # Ou outra versão de Node.js que seu projeto usa
+
+      # Instala as dependências
+      - name: Install dependencies
+        run: npm install
+
+      # Adiciona as variáveis de ambiente a partir dos secrets que você criou
+      - name: Set environment variables
+        run: |
+          echo "API_IDENTIFIER=${{ secrets.API_IDENTIFIER }}" >> $GITHUB_ENV
+          echo "API_PASSWORD=${{ secrets.API_PASSWORD }}" >> $GITHUB_ENV
+
+      # Executa o build do projeto
+      - name: Build the project
+        run: npm run build  # Altere este comando caso tenha outro comando para build
+
+      # Faz o deploy no GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # Token para autenticação no GitHub
+          publish_dir: ./public  # Diretório gerado pelo build (altere se necessário)
