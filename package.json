@@ -1,0 +1,32 @@
+{
+  "name": "defesa-mt-monitoramento",
+  "version": "1.0.0",
+  "description": "Projeto voltado para o monitoramento e análise de dados ambientais no estado de Mato Grosso, Brasil, utilizando mapas interativos para visualização de focos de incêndio e áreas desmatadas.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node js/server.mjs",
+    "dev": "nodemon js/server.mjs"
+  },
+  "dependencies": {
+    "axios": "^1.7.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "leaflet": "^1.9.4",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "keywords": [
+    "monitoramento",
+    "meio-ambiente",
+    "mato-grosso",
+    "mapas-interativos",
+    "focos-de-incêndio",
+    "desmatamento"
+  ],
+  "author": "DEFESA CIVIL - MT",
+  "license": "MIT"
+}

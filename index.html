@@ -1,93 +1,95 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
-        <meta name="mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <link rel="stylesheet" href="css/leaflet.css">
-        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
-        <link rel="stylesheet" href="css/L.Control.Locate.min.css">
-        <link rel="stylesheet" href="css/qgis2web.css">
-        <link rel="stylesheet" href="css/fontawesome-all.min.css">
-        <link rel="stylesheet" href="css/MarkerCluster.css">
-        <link rel="stylesheet" href="css/MarkerCluster.Default.css">
-        <link rel="stylesheet" href="css/leaflet-measure.css">
-        <style>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="css/leaflet.css">
+    <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+    <link rel="stylesheet" href="css/L.Control.Locate.min.css">
+    <link rel="stylesheet" href="css/qgis2web.css">
+    <link rel="stylesheet" href="css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="css/MarkerCluster.css">
+    <link rel="stylesheet" href="css/MarkerCluster.Default.css">
+    <link rel="stylesheet" href="css/leaflet-measure.css">
+    <style>
         html, body, #map {
             width: 100%;
             height: 100%;
             padding: 0;
             margin: 0;
         }
-        </style>
-        <title></title>
-    </head>
-    <body>
-        <div id="map">
-        </div>
-        <script src="js/qgis2web_expressions.js"></script>
-        <script src="js/leaflet.js"></script>
-        <script src="js/L.Control.Layers.Tree.min.js"></script>
-        <script src="js/L.Control.Locate.min.js"></script>
-        <script src="js/leaflet.rotatedMarker.js"></script>
-        <script src="js/leaflet.pattern.js"></script>
-        <script src="js/leaflet-hash.js"></script>
-        <script src="js/Autolinker.min.js"></script>
-        <script src="js/rbush.min.js"></script>
-        <script src="js/labelgun.min.js"></script>
-        <script src="js/labels.js"></script>
-        <script src="js/leaflet-measure.js"></script>
-        <script src="js/leaflet.markercluster.js"></script>
-        <script src="data/MT_UF_2022_2.js"></script>
-        <script src="data/AvioPantanal_3.js"></script>
-        <script src="data/AvioRosrio_4.js"></script>
-        <script src="data/aviaoTanguaradaSerra_5.js"></script>
-        <script src="data/aceiros2_8.js"></script>
-        <script src="data/UnidadedeUC_9.js"></script>
-        <script src="data/EventodeFogo_11.js"></script>
-        <script src="data/TI_12.js"></script>
-        <script src="data/focos_qmd_inpe_20240905_20240906_13770761focos_qmd_inpe_2024_09_05_2024_09_06_13770761_13.js"></script>
-        <script>
+    </style>
+    <title></title>
+</head>
+<body>
+    <div id="map"></div>
+    <!-- Inclua o Axios CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="js/qgis2web_expressions.js"></script>
+    <script src="js/leaflet.js"></script>
+    <script src="js/L.Control.Layers.Tree.min.js"></script>
+    <script src="js/L.Control.Locate.min.js"></script>
+    <script src="js/leaflet.rotatedMarker.js"></script>
+    <script src="js/leaflet.pattern.js"></script>
+    <script src="js/leaflet-hash.js"></script>
+    <script src="js/Autolinker.min.js"></script>
+    <script src="js/rbush.min.js"></script>
+    <script src="js/labelgun.min.js"></script>
+    <script src="js/labels.js"></script>
+    <script src="js/leaflet-measure.js"></script>
+    <script src="js/leaflet.markercluster.js"></script>
+    <script src="data/MT_UF_2022_2.js"></script>
+    <script src="data/AvioPantanal_3.js"></script>
+    <script src="data/AvioRosrio_4.js"></script>
+    <script src="data/aviaoTanguaradaSerra_5.js"></script>
+    <script src="data/aceiros2_8.js"></script>
+    <script src="data/UnidadedeUC_9.js"></script>
+    <script src="data/EventodeFogo_11.js"></script>
+    <script src="data/TI_12.js"></script>
+    <script src="data/focos_qmd_inpe_20240905_20240906_13770761focos_qmd_inpe_2024_09_05_2024_09_06_13770761_13.js">
+    </script>
+    <script>
         var map = L.map('map', {
-            zoomControl:false, maxZoom:28, minZoom:1
-        }).fitBounds([[-20.692710978875972,-68.17425831535351],[-5.723113176276636,-42.938289217888354]]);
+            zoomControl: false, maxZoom: 28, minZoom: 1
+        }).fitBounds([[-20.692710978875972, -68.17425831535351], [-5.723113176276636, -42.938289217888354]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
-        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var autolinker = new Autolinker({ truncate: { length: 30, location: 'smart' } });
         // remove popup's row if "visible-with-data"
         function removeEmptyRowsFromPopupContent(content, feature) {
-         var tempDiv = document.createElement('div');
-         tempDiv.innerHTML = content;
-         var rows = tempDiv.querySelectorAll('tr');
-         for (var i = 0; i < rows.length; i++) {
-             var td = rows[i].querySelector('td.visible-with-data');
-             var key = td ? td.id : '';
-             if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
-                 rows[i].parentNode.removeChild(rows[i]);
-             }
-         }
-         return tempDiv.innerHTML;
+            var tempDiv = document.createElement('div');
+            tempDiv.innerHTML = content;
+            var rows = tempDiv.querySelectorAll('tr');
+            for (var i = 0; i < rows.length; i++) {
+                var td = rows[i].querySelector('td.visible-with-data');
+                var key = td ? td.id : '';
+                if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
+                    rows[i].parentNode.removeChild(rows[i]);
+                }
+            }
+            return tempDiv.innerHTML;
         }
         // add class to format popup if it contains media
-		function addClassToPopupIfMedia(content, popup) {
-			var tempDiv = document.createElement('div');
-			tempDiv.innerHTML = content;
-			if (tempDiv.querySelector('td img')) {
-				popup._contentNode.classList.add('media');
-					// Delay to force the redraw
-					setTimeout(function() {
-						popup.update();
-					}, 10);
-			} else {
-				popup._contentNode.classList.remove('media');
-			}
-		}
+        function addClassToPopupIfMedia(content, popup) {
+            var tempDiv = document.createElement('div');
+            tempDiv.innerHTML = content;
+            if (tempDiv.querySelector('td img')) {
+                popup._contentNode.classList.add('media');
+                // Delay to force the redraw
+                setTimeout(function () {
+                    popup.update();
+                }, 10);
+            } else {
+                popup._contentNode.classList.remove('media');
+            }
+        }
         var zoomControl = L.control.zoom({
             position: 'topleft'
         }).addTo(map);
-        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
+        L.control.locate({ locateOptions: { maxZoom: 19 } }).addTo(map);
         var measureControl = new L.Control.Measure({
             position: 'topleft',
             primaryLengthUnit: 'meters',
@@ -152,10 +154,10 @@
                     </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-			layer.on('popupopen', function(e) {
-				addClassToPopupIfMedia(content, e.popup);
-			});
-			layer.bindPopup(content, { maxHeight: 400 });
+            layer.on('popupopen', function (e) {
+                addClassToPopupIfMedia(content, e.popup);
+            });
+            layer.bindPopup(content, { maxHeight: 400 });
         }
 
         function style_MT_UF_2022_2_0() {
@@ -166,7 +168,7 @@
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
-                weight: 3.0, 
+                weight: 3.0,
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(190,207,80,0.0)',
@@ -235,21 +237,21 @@
                     </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-			layer.on('popupopen', function(e) {
-				addClassToPopupIfMedia(content, e.popup);
-			});
-			layer.bindPopup(content, { maxHeight: 400 });
+            layer.on('popupopen', function (e) {
+                addClassToPopupIfMedia(content, e.popup);
+            });
+            layer.bindPopup(content, { maxHeight: 400 });
         }
 
         function style_AvioPantanal_3_0() {
             return {
                 pane: 'pane_AvioPantanal_3',
-        rotationAngle: 0.0,
-        rotationOrigin: 'center center',
-        icon: L.icon({
-            iconUrl: 'markers/AvioPantanal_3.svg',
-            iconSize: [22.799999999999997, 22.799999999999997]
-        }),
+                rotationAngle: 0.0,
+                rotationOrigin: 'center center',
+                icon: L.icon({
+                    iconUrl: 'markers/AvioPantanal_3.svg',
+                    iconSize: [22.799999999999997, 22.799999999999997]
+                }),
                 interactive: true,
             }
         }
@@ -271,8 +273,10 @@
                 return L.marker(latlng, style_AvioPantanal_3_0(feature));
             },
         });
-        var cluster_AvioPantanal_3 = new L.MarkerClusterGroup({showCoverageOnHover: false,
-            spiderfyDistanceMultiplier: 2});
+        var cluster_AvioPantanal_3 = new L.MarkerClusterGroup({
+            showCoverageOnHover: false,
+            spiderfyDistanceMultiplier: 2
+        });
         cluster_AvioPantanal_3.addLayer(layer_AvioPantanal_3);
 
         bounds_group.addLayer(layer_AvioPantanal_3);
@@ -325,21 +329,21 @@
                     </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-			layer.on('popupopen', function(e) {
-				addClassToPopupIfMedia(content, e.popup);
-			});
-			layer.bindPopup(content, { maxHeight: 400 });
+            layer.on('popupopen', function (e) {
+                addClassToPopupIfMedia(content, e.popup);
+            });
+            layer.bindPopup(content, { maxHeight: 400 });
         }
 
         function style_AvioRosrio_4_0() {
             return {
                 pane: 'pane_AvioRosrio_4',
-        rotationAngle: 0.0,
-        rotationOrigin: 'center center',
-        icon: L.icon({
-            iconUrl: 'markers/AvioRosrio_4.svg',
-            iconSize: [19.0, 19.0]
-        }),
+                rotationAngle: 0.0,
+                rotationOrigin: 'center center',
+                icon: L.icon({
+                    iconUrl: 'markers/AvioRosrio_4.svg',
+                    iconSize: [19.0, 19.0]
+                }),
                 interactive: true,
             }
         }
@@ -361,8 +365,10 @@
                 return L.marker(latlng, style_AvioRosrio_4_0(feature));
             },
         });
-        var cluster_AvioRosrio_4 = new L.MarkerClusterGroup({showCoverageOnHover: false,
-            spiderfyDistanceMultiplier: 2});
+        var cluster_AvioRosrio_4 = new L.MarkerClusterGroup({
+            showCoverageOnHover: false,
+            spiderfyDistanceMultiplier: 2
+        });
         cluster_AvioRosrio_4.addLayer(layer_AvioRosrio_4);
 
         bounds_group.addLayer(layer_AvioRosrio_4);
@@ -375,21 +381,21 @@
                     </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-			layer.on('popupopen', function(e) {
-				addClassToPopupIfMedia(content, e.popup);
-			});
-			layer.bindPopup(content, { maxHeight: 400 });
+            layer.on('popupopen', function (e) {
+                addClassToPopupIfMedia(content, e.popup);
+            });
+            layer.bindPopup(content, { maxHeight: 400 });
         }
 
         function style_aviaoTanguaradaSerra_5_0() {
             return {
                 pane: 'pane_aviaoTanguaradaSerra_5',
-        rotationAngle: 0.0,
-        rotationOrigin: 'center center',
-        icon: L.icon({
-            iconUrl: 'markers/aviaoTanguaradaSerra_5.svg',
-            iconSize: [19.0, 19.0]
-        }),
+                rotationAngle: 0.0,
+                rotationOrigin: 'center center',
+                icon: L.icon({
+                    iconUrl: 'markers/aviaoTanguaradaSerra_5.svg',
+                    iconSize: [19.0, 19.0]
+                }),
                 interactive: true,
             }
         }
@@ -411,8 +417,10 @@
                 return L.marker(latlng, style_aviaoTanguaradaSerra_5_0(feature));
             },
         });
-        var cluster_aviaoTanguaradaSerra_5 = new L.MarkerClusterGroup({showCoverageOnHover: false,
-            spiderfyDistanceMultiplier: 2});
+        var cluster_aviaoTanguaradaSerra_5 = new L.MarkerClusterGroup({
+            showCoverageOnHover: false,
+            spiderfyDistanceMultiplier: 2
+        });
         cluster_aviaoTanguaradaSerra_5.addLayer(layer_aviaoTanguaradaSerra_5);
 
         bounds_group.addLayer(layer_aviaoTanguaradaSerra_5);
@@ -420,19 +428,19 @@
         map.createPane('pane_ChuvasObservado_6');
         map.getPane('pane_ChuvasObservado_6').style.zIndex = 406;
         var img_ChuvasObservado_6 = 'data/ChuvasObservado_6.png';
-        var img_bounds_ChuvasObservado_6 = [[-17.999999999999993,-61.599998386504375],[-7.399999999999997,-50.299998691141035]];
+        var img_bounds_ChuvasObservado_6 = [[-17.999999999999993, -61.599998386504375], [-7.399999999999997, -50.299998691141035]];
         var layer_ChuvasObservado_6 = new L.imageOverlay(img_ChuvasObservado_6,
-                                              img_bounds_ChuvasObservado_6,
-                                              {pane: 'pane_ChuvasObservado_6'});
+            img_bounds_ChuvasObservado_6,
+            { pane: 'pane_ChuvasObservado_6' });
         bounds_group.addLayer(layer_ChuvasObservado_6);
         map.addLayer(layer_ChuvasObservado_6);
         map.createPane('pane_Umidade_7');
         map.getPane('pane_Umidade_7').style.zIndex = 407;
         var img_Umidade_7 = 'data/Umidade_7.png';
-        var img_bounds_Umidade_7 = [[-17.999999237060546,-61.59999359229709],[-7.39999923706055,-50.29999288147837]];
+        var img_bounds_Umidade_7 = [[-17.999999237060546, -61.59999359229709], [-7.39999923706055, -50.29999288147837]];
         var layer_Umidade_7 = new L.imageOverlay(img_Umidade_7,
-                                              img_bounds_Umidade_7,
-                                              {pane: 'pane_Umidade_7'});
+            img_bounds_Umidade_7,
+            { pane: 'pane_Umidade_7' });
         bounds_group.addLayer(layer_Umidade_7);
         map.addLayer(layer_Umidade_7);
         function pop_aceiros2_8(feature, layer) {
@@ -587,10 +595,10 @@
                     </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-			layer.on('popupopen', function(e) {
-				addClassToPopupIfMedia(content, e.popup);
-			});
-			layer.bindPopup(content, { maxHeight: 400 });
+            layer.on('popupopen', function (e) {
+                addClassToPopupIfMedia(content, e.popup);
+            });
+            layer.bindPopup(content, { maxHeight: 400 });
         }
 
         function style_aceiros2_8_0() {
@@ -688,10 +696,10 @@
                     </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-			layer.on('popupopen', function(e) {
-				addClassToPopupIfMedia(content, e.popup);
-			});
-			layer.bindPopup(content, { maxHeight: 400 });
+            layer.on('popupopen', function (e) {
+                addClassToPopupIfMedia(content, e.popup);
+            });
+            layer.bindPopup(content, { maxHeight: 400 });
         }
 
         function style_UnidadedeUC_9_0() {
@@ -702,7 +710,7 @@
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
-                weight: 1.0, 
+                weight: 1.0,
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(166,206,227,0.2594627450980392)',
@@ -726,10 +734,10 @@
         map.createPane('pane_Recortadomascara_10');
         map.getPane('pane_Recortadomascara_10').style.zIndex = 410;
         var img_Recortadomascara_10 = 'data/Recortadomascara_10.png';
-        var img_bounds_Recortadomascara_10 = [[-17.999999237060546,-61.59999359229709],[-7.39999923706055,-50.29999288147837]];
+        var img_bounds_Recortadomascara_10 = [[-17.999999237060546, -61.59999359229709], [-7.39999923706055, -50.29999288147837]];
         var layer_Recortadomascara_10 = new L.imageOverlay(img_Recortadomascara_10,
-                                              img_bounds_Recortadomascara_10,
-                                              {pane: 'pane_Recortadomascara_10'});
+            img_bounds_Recortadomascara_10,
+            { pane: 'pane_Recortadomascara_10' });
         bounds_group.addLayer(layer_Recortadomascara_10);
         map.addLayer(layer_Recortadomascara_10);
         function pop_EventodeFogo_11(feature, layer) {
@@ -864,10 +872,10 @@
                     </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-			layer.on('popupopen', function(e) {
-				addClassToPopupIfMedia(content, e.popup);
-			});
-			layer.bindPopup(content, { maxHeight: 400 });
+            layer.on('popupopen', function (e) {
+                addClassToPopupIfMedia(content, e.popup);
+            });
+            layer.bindPopup(content, { maxHeight: 400 });
         }
 
         function style_EventodeFogo_11_0() {
@@ -878,7 +886,7 @@
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
-                weight: 1.0, 
+                weight: 1.0,
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(215,25,28,0.2083764705882353)',
@@ -987,10 +995,10 @@
                     </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-			layer.on('popupopen', function(e) {
-				addClassToPopupIfMedia(content, e.popup);
-			});
-			layer.bindPopup(content, { maxHeight: 400 });
+            layer.on('popupopen', function (e) {
+                addClassToPopupIfMedia(content, e.popup);
+            });
+            layer.bindPopup(content, { maxHeight: 400 });
         }
 
         function style_TI_12_0() {
@@ -1001,7 +1009,7 @@
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
-                weight: 1.0, 
+                weight: 1.0,
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(133,182,111,0.26710588235294114)',
@@ -1118,21 +1126,21 @@
                     </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-			layer.on('popupopen', function(e) {
-				addClassToPopupIfMedia(content, e.popup);
-			});
-			layer.bindPopup(content, { maxHeight: 400 });
+            layer.on('popupopen', function (e) {
+                addClassToPopupIfMedia(content, e.popup);
+            });
+            layer.bindPopup(content, { maxHeight: 400 });
         }
 
         function style_focos_qmd_inpe_20240905_20240906_13770761focos_qmd_inpe_2024_09_05_2024_09_06_13770761_13_0() {
             return {
                 pane: 'pane_focos_qmd_inpe_20240905_20240906_13770761focos_qmd_inpe_2024_09_05_2024_09_06_13770761_13',
-        rotationAngle: 0.0,
-        rotationOrigin: 'center center',
-        icon: L.icon({
-            iconUrl: 'markers/focos_qmd_inpe_20240905_20240906_13770761focos_qmd_inpe_2024_09_05_2024_09_06_13770761_13.svg',
-            iconSize: [12.920000000000003, 12.920000000000003]
-        }),
+                rotationAngle: 0.0,
+                rotationOrigin: 'center center',
+                icon: L.icon({
+                    iconUrl: 'markers/focos_qmd_inpe_20240905_20240906_13770761focos_qmd_inpe_2024_09_05_2024_09_06_13770761_13.svg',
+                    iconSize: [12.920000000000003, 12.920000000000003]
+                }),
                 interactive: true,
             }
         }
@@ -1154,29 +1162,31 @@
                 return L.marker(latlng, style_focos_qmd_inpe_20240905_20240906_13770761focos_qmd_inpe_2024_09_05_2024_09_06_13770761_13_0(feature));
             },
         });
-        var cluster_focos_qmd_inpe_20240905_20240906_13770761focos_qmd_inpe_2024_09_05_2024_09_06_13770761_13 = new L.MarkerClusterGroup({showCoverageOnHover: false,
-            spiderfyDistanceMultiplier: 2});
+        var cluster_focos_qmd_inpe_20240905_20240906_13770761focos_qmd_inpe_2024_09_05_2024_09_06_13770761_13 = new L.MarkerClusterGroup({
+            showCoverageOnHover: false,
+            spiderfyDistanceMultiplier: 2
+        });
         cluster_focos_qmd_inpe_20240905_20240906_13770761focos_qmd_inpe_2024_09_05_2024_09_06_13770761_13.addLayer(layer_focos_qmd_inpe_20240905_20240906_13770761focos_qmd_inpe_2024_09_05_2024_09_06_13770761_13);
 
         bounds_group.addLayer(layer_focos_qmd_inpe_20240905_20240906_13770761focos_qmd_inpe_2024_09_05_2024_09_06_13770761_13);
         cluster_focos_qmd_inpe_20240905_20240906_13770761focos_qmd_inpe_2024_09_05_2024_09_06_13770761_13.addTo(map);
         var baseMaps = {};
         var overlaysTree = [
-            {label: '<img src="legend/focos_qmd_inpe_20240905_20240906_13770761focos_qmd_inpe_2024_09_05_2024_09_06_13770761_13.png" /> focos_qmd_inpe_2024-09-05_2024-09-06_13.770761 — focos_qmd_inpe_2024_09_05_2024_09_06_13.770761', layer: cluster_focos_qmd_inpe_20240905_20240906_13770761focos_qmd_inpe_2024_09_05_2024_09_06_13770761_13},
-            {label: '<img src="legend/TI_12.png" /> TI', layer: layer_TI_12},
-            {label: '<img src="legend/EventodeFogo_11.png" /> Evento de Fogo', layer: layer_EventodeFogo_11},
-            {label: "Recortado (mascara)", layer: layer_Recortadomascara_10},
-            {label: '<img src="legend/UnidadedeUC_9.png" /> Unidade de UC', layer: layer_UnidadedeUC_9},
-            {label: '<img src="legend/aceiros2_8.png" /> aceiros 2', layer: layer_aceiros2_8},
-            {label: "Umidade ", layer: layer_Umidade_7},
-            {label: "Chuvas Observado", layer: layer_ChuvasObservado_6},
-            {label: '<img src="legend/aviaoTanguaradaSerra_5.png" /> aviao Tanguara da Serra', layer: cluster_aviaoTanguaradaSerra_5},
-            {label: '<img src="legend/AvioRosrio_4.png" /> Avião Rosário', layer: cluster_AvioRosrio_4},
-            {label: '<img src="legend/AvioPantanal_3.png" /> Avião Pantanal', layer: cluster_AvioPantanal_3},
-            {label: '<img src="legend/MT_UF_2022_2.png" /> MT_UF_2022', layer: layer_MT_UF_2022_2},
-            {label: "Google Hybrid", layer: layer_GoogleHybrid_1},
-            {label: "Google Terrain", layer: layer_GoogleTerrain_0},]
-        var lay = L.control.layers.tree(null, overlaysTree,{
+            { label: '<img src="legend/focos_qmd_inpe_20240905_20240906_13770761focos_qmd_inpe_2024_09_05_2024_09_06_13770761_13.png" /> focos_qmd_inpe_2024-09-05_2024-09-06_13.770761 — focos_qmd_inpe_2024_09_05_2024_09_06_13.770761', layer: cluster_focos_qmd_inpe_20240905_20240906_13770761focos_qmd_inpe_2024_09_05_2024_09_06_13770761_13 },
+            { label: '<img src="legend/TI_12.png" /> TI', layer: layer_TI_12 },
+            { label: '<img src="legend/EventodeFogo_11.png" /> Evento de Fogo', layer: layer_EventodeFogo_11 },
+            { label: "Recortado (mascara)", layer: layer_Recortadomascara_10 },
+            { label: '<img src="legend/UnidadedeUC_9.png" /> Unidade de UC', layer: layer_UnidadedeUC_9 },
+            { label: '<img src="legend/aceiros2_8.png" /> aceiros 2', layer: layer_aceiros2_8 },
+            { label: "Umidade ", layer: layer_Umidade_7 },
+            { label: "Chuvas Observado", layer: layer_ChuvasObservado_6 },
+            { label: '<img src="legend/aviaoTanguaradaSerra_5.png" /> aviao Tanguara da Serra', layer: cluster_aviaoTanguaradaSerra_5 },
+            { label: '<img src="legend/AvioRosrio_4.png" /> Avião Rosário', layer: cluster_AvioRosrio_4 },
+            { label: '<img src="legend/AvioPantanal_3.png" /> Avião Pantanal', layer: cluster_AvioPantanal_3 },
+            { label: '<img src="legend/MT_UF_2022_2.png" /> MT_UF_2022', layer: layer_MT_UF_2022_2 },
+            { label: "Google Hybrid", layer: layer_GoogleHybrid_1 },
+            { label: "Google Terrain", layer: layer_GoogleTerrain_0 }]
+        var lay = L.control.layers.tree(null, overlaysTree, {
             //namedToggle: true,
             //selectorBack: false,
             //closedSymbol: '&#8862; &#x1f5c0;',
@@ -1192,6 +1202,7 @@
                 return this._bounds;
             }
         });
-        </script>
-    </body>
+    </script>
+    <script src="js/stations.js"></script>
+</body>
 </html>
