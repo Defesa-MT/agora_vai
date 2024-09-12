@@ -49,12 +49,13 @@ app.get('/stations', async (req, res) => {
 app.get('/hydrological-data', async (req, res) => {
     const { codigoEstacao } = req.query;
     const url = 'https://www.ana.gov.br/hidrowebservice/EstacoesTelemetricas/HidroinfoanaSerieTelemetricaAdotada/v1';
-    
+
+    console.log(`Fetching hydrological data for station: ${codigoEstacao}`); // Log do código da estação sendo buscada
+
     try {
         const authResponse = await authenticate();
         const token = authResponse.items.tokenautenticacao;
-
-        // Faz a requisição para buscar os dados hidrológicos
+        
         const response = await axios.get(url, {
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -68,12 +69,15 @@ app.get('/hydrological-data', async (req, res) => {
             }
         });
 
-        const items = response.data.items;
-        console.log(items);
+        console.log('Response from ANA:', response.data); // Log dos dados recebidos da ANA
 
+        const items = response.data.items;
+        
         if (items.length > 0) {
             // Acessa o último item da lista, que representa o dado mais recente
             const latestData = items[items.length - 1];
+
+            console.log('Latest data:', latestData); // Log do dado mais recente
 
             res.json({
                 chuva: latestData.Chuva_Adotada || 'N/A',
@@ -81,6 +85,7 @@ app.get('/hydrological-data', async (req, res) => {
                 vazao: latestData.Vazao_Adotada || 'N/A',
             });
         } else {
+            console.log('No data available for station:', codigoEstacao); // Log se não houver dados
             res.json({
                 chuva: 'N/A',
                 nivel: 'N/A',
@@ -89,7 +94,7 @@ app.get('/hydrological-data', async (req, res) => {
         }
 
     } catch (error) {
-        console.error('Erro ao carregar dados hidrológicos:', error);
+        console.error('Erro ao carregar dados hidrológicos:', error); // Log detalhado do erro
         res.status(500).json({
             chuva: 'Erro',
             nivel: 'Erro',

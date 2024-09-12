@@ -23,21 +23,35 @@ export async function fetchStationsMatoGrosso() {
             }
         });
 
-        // Mapeia as estações retornadas para exibir todas as informações necessárias
-        const stationsData = response.data.items.map(station => ({
-            name: station.Estacao_Nome,                  // Nome da estação
-            codigoestacao: station.codigoestacao,                  // Código da estação
-            lat: parseFloat(station.Latitude),           // Latitude
-            lng: parseFloat(station.Longitude),          // Longitude
-            altitude: station.Altitude || 'N/A',         // Altitude
-            bacia: station.Bacia_Nome || 'N/A',          // Nome da Bacia
-            municipio: station.Municipio_Nome || 'N/A',  // Nome do Município
-            ultimaAtualizacao: station.Data_Ultima_Atualizacao || 'N/A', // Última atualização
-            tipoEstacao: station.Tipo_Estacao || 'N/A'   // Tipo de estação
-        }));
+        // Define o ano corrente
+        const currentYear = new Date().getFullYear();
 
-        // Exibe as estações no console
-        // console.log('Estações no Mato Grosso:', stationsData);
+        // Função para validar se a data de atualização é no ano corrente
+        function isCurrentYearDate(dateString) {
+            const date = new Date(dateString);
+            return !isNaN(date.getTime()) && date.getFullYear() === currentYear;
+        }
+
+        // Filtra apenas as estações fluviométricas e que foram atualizadas no ano corrente
+        const stationsData = response.data.items
+            .filter(station => 
+                station.Tipo_Estacao === 'Fluviometrica' &&  // Filtro para incluir apenas "Fluviometrica"
+                isCurrentYearDate(station.Data_Ultima_Atualizacao) // Verifica se a estação foi atualizada no ano corrente
+            )
+            .map(station => ({
+                name: station.Estacao_Nome,                  // Nome da estação
+                codigoestacao: station.codigoestacao,        // Código da estação
+                lat: parseFloat(station.Latitude),           // Latitude
+                lng: parseFloat(station.Longitude),          // Longitude
+                altitude: station.Altitude || 'N/A',         // Altitude
+                bacia: station.Bacia_Nome || 'N/A',          // Nome da Bacia
+                municipio: station.Municipio_Nome || 'N/A',  // Nome do Município
+                ultimaAtualizacao: station.Data_Ultima_Atualizacao || 'N/A', // Última atualização
+                tipoEstacao: station.Tipo_Estacao || 'N/A'   // Tipo de estação
+            }));
+
+        // Exibe as estações fluviométricas atualizadas no ano corrente no console
+        console.log('Estações fluviométricas atualizadas no ano corrente no Mato Grosso:', stationsData);
 
         // Retorna os dados para serem usados no frontend
         return stationsData;

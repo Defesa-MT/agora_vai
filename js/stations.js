@@ -1,3 +1,5 @@
+// import fetch from 'node-fetch';
+
 function addStationsToMap(map) {
     // Detecta se está rodando no GitHub Pages ou localmente
     const isGitHubPages = window.location.hostname === 'iz-brum.github.io';
@@ -79,17 +81,29 @@ function addStationsToMap(map) {
 }
 
 // Função para carregar dados hidrológicos da estação através do servidor
-async function fetchHydrologicalData(codigoEstacao) {
-    // Detecta se está rodando no GitHub Pages ou localmente
-    const isGitHubPages = window.location.hostname === 'iz-brum.github.io';
+async function fetchHydrologicalData(codigoEstacao, isNode = false) {
+    let url;
 
-    const url = isGitHubPages
-        ? `./data/hydrologicalData.json?codigoEstacao=${codigoEstacao}`  // Caminho para o arquivo estático no GitHub Pages
-        : `http://localhost:3000/hydrological-data?codigoEstacao=${codigoEstacao}`;  // Backend local para desenvolvimento
+    if (isNode) {
+        url = `http://localhost:3000/hydrological-data?codigoEstacao=${codigoEstacao}`;
+    } else {
+        const isGitHubPages = window.location.hostname === 'iz-brum.github.io';
+        url = isGitHubPages
+            ? `./data/hydrologicalData.json?codigoEstacao=${codigoEstacao}`
+            : `http://localhost:3000/hydrological-data?codigoEstacao=${codigoEstacao}`;
+    }
 
     try {
+        console.log(`Fazendo requisição para: ${url}`);
         const response = await fetch(url);
+        console.log(`Status da resposta: ${response.status} - ${response.statusText}`);
+
+        if (!response.ok) {
+            throw new Error(`Falha na requisição: ${response.status} - ${response.statusText}`);
+        }
+
         const data = await response.json();
+        console.log(`Dados recebidos para a estação ${codigoEstacao}:`, data);
 
         return {
             chuva: data.chuva || 'N/A',
@@ -97,7 +111,7 @@ async function fetchHydrologicalData(codigoEstacao) {
             vazao: data.vazao || 'N/A',
         };
     } catch (error) {
-        console.error('Erro ao carregar dados hidrológicos:', error);
+        console.error(`Erro ao carregar dados hidrológicos para a estação ${codigoEstacao}:`, error);
         return {
             chuva: 'Erro',
             nivel: 'Erro',
@@ -106,22 +120,28 @@ async function fetchHydrologicalData(codigoEstacao) {
     }
 }
 
-// Espera que o mapa seja inicializado no index.html
-document.addEventListener('DOMContentLoaded', function () {
-    if (typeof map !== 'undefined') {
-        addStationsToMap(map);  // Chama a função para adicionar as estações ao mapa se o mapa existir
-    } else {
-        console.error('O mapa não foi inicializado corretamente.');
-    }
-});
+// export {fetchHydrologicalData};
 
-// Função para adicionar dinamicamente o arquivo CSS
-function loadCSS(href) {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = href;
-    document.head.appendChild(link);
+// Verifique se está em um ambiente de navegador antes de executar qualquer código relacionado ao DOM
+if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+    // Espera que o mapa seja inicializado no index.html (apenas em navegador)
+    document.addEventListener('DOMContentLoaded', function () {
+        if (typeof map !== 'undefined') {
+            addStationsToMap(map);  // Chama a função para adicionar as estações ao mapa se o mapa existir
+        } else {
+            console.error('O mapa não foi inicializado corretamente.');
+        }
+    });
+
+    // Função para adicionar dinamicamente o arquivo CSS (apenas em navegador)
+    function loadCSS(href) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = href;
+        document.head.appendChild(link);
+    }
+
+    // Chama a função para adicionar o CSS
+    loadCSS('css/cluster-custom.css');
 }
 
-// Chama a função para adicionar o CSS
-loadCSS('css/cluster-custom.css');
