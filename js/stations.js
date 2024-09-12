@@ -3,7 +3,7 @@ function addStationsToMap(map) {
     const isGitHubPages = window.location.hostname === 'iz-brum.github.io';
     
     const dataUrl = isGitHubPages
-        ? '/data/stationsData.json'  // Se for GitHub Pages, usa o arquivo JSON estático
+        ? './data/stationsData.json'  // Se for GitHub Pages, usa o arquivo JSON estático
         : 'http://localhost:3000/stations';  // Se for local, usa o backend local
 
     // Faz o fetch dos dados
