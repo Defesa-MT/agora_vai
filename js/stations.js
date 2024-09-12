@@ -64,7 +64,7 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
 // Função que adiciona estações ao mapa e configura popups com os dados
 function addStationsToMap(map) {
     const isGitHubPages = window.location.hostname === 'iz-brum.github.io';
-    const dataUrl = isGitHubPages ? './stationsData.json' : 'http://localhost:3000/stations';
+    const dataUrl = isGitHubPages ? './data/stationsData.json' : 'http://localhost:3000/stations';
 
     fetch(dataUrl)
         .then(response => response.json())
