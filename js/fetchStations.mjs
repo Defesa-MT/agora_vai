@@ -47,6 +47,3 @@ export async function fetchStationsMatoGrosso() {
         console.error('Erro ao buscar estações:', error);
     }
 }
-
-// Executa a função
-fetchStationsMatoGrosso();
