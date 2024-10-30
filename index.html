@@ -44,11 +44,11 @@
         <script src="data/Aceiros_4.js"></script>
         <script src="data/EventodeFogo_5.js"></script>
         <script src="data/MT_UF_2022_6.js"></script>
-        <script src="data/FocosAtivos_7.js"></script>
+        <script src="data/FocosAtivos_10.js"></script>
         <script>
         var map = L.map('map', {
             zoomControl:false, maxZoom:28, minZoom:1
-        }).fitBounds([[-18.213864918363495,-59.46127893783311],[-14.47146546771366,-52.57315802632056]]);
+        }).fitBounds([[-20.36804795502124,-69.63551613133481],[-5.3984501524219155,-42.08303248528463]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -630,7 +630,31 @@
         });
         bounds_group.addLayer(layer_MT_UF_2022_6);
         map.addLayer(layer_MT_UF_2022_6);
-        function pop_FocosAtivos_7(feature, layer) {
+        map.createPane('pane_Riscodefogo_7');
+        map.getPane('pane_Riscodefogo_7').style.zIndex = 407;
+        var img_Riscodefogo_7 = 'data/Riscodefogo_7.png';
+        var img_bounds_Riscodefogo_7 = [[-18.040000003589114,-61.62480180610372],[-7.350000003589116,-50.22480180610373]];
+        var layer_Riscodefogo_7 = new L.imageOverlay(img_Riscodefogo_7,
+                                              img_bounds_Riscodefogo_7,
+                                              {pane: 'pane_Riscodefogo_7'});
+        bounds_group.addLayer(layer_Riscodefogo_7);
+        map.createPane('pane_chuvasMT_8');
+        map.getPane('pane_chuvasMT_8').style.zIndex = 408;
+        var img_chuvasMT_8 = 'data/chuvasMT_8.png';
+        var img_bounds_chuvasMT_8 = [[-18.0,-61.599993718],[-7.400000000000004,-50.299992388000014]];
+        var layer_chuvasMT_8 = new L.imageOverlay(img_chuvasMT_8,
+                                              img_bounds_chuvasMT_8,
+                                              {pane: 'pane_chuvasMT_8'});
+        bounds_group.addLayer(layer_chuvasMT_8);
+        map.createPane('pane_umidadeMT_9');
+        map.getPane('pane_umidadeMT_9').style.zIndex = 409;
+        var img_umidadeMT_9 = 'data/umidadeMT_9.png';
+        var img_bounds_umidadeMT_9 = [[-17.999999237,-61.599993592],[-7.399999237,-50.299992881]];
+        var layer_umidadeMT_9 = new L.imageOverlay(img_umidadeMT_9,
+                                              img_bounds_umidadeMT_9,
+                                              {pane: 'pane_umidadeMT_9'});
+        bounds_group.addLayer(layer_umidadeMT_9);
+        function pop_FocosAtivos_10(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['Name'] !== null ? autolinker.link(feature.properties['Name'].toLocaleString()) : '') + '</td>\
@@ -709,9 +733,9 @@
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
-        function style_FocosAtivos_7_0() {
+        function style_FocosAtivos_10_0() {
             return {
-                pane: 'pane_FocosAtivos_7',
+                pane: 'pane_FocosAtivos_10',
                 radius: 4.0,
                 opacity: 1,
                 color: 'rgba(238,66,49,1.0)',
@@ -725,30 +749,30 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_FocosAtivos_7');
-        map.getPane('pane_FocosAtivos_7').style.zIndex = 407;
-        map.getPane('pane_FocosAtivos_7').style['mix-blend-mode'] = 'normal';
-        var layer_FocosAtivos_7 = new L.geoJson(json_FocosAtivos_7, {
+        map.createPane('pane_FocosAtivos_10');
+        map.getPane('pane_FocosAtivos_10').style.zIndex = 410;
+        map.getPane('pane_FocosAtivos_10').style['mix-blend-mode'] = 'normal';
+        var layer_FocosAtivos_10 = new L.geoJson(json_FocosAtivos_10, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_FocosAtivos_7',
-            layerName: 'layer_FocosAtivos_7',
-            pane: 'pane_FocosAtivos_7',
-            onEachFeature: pop_FocosAtivos_7,
+            dataVar: 'json_FocosAtivos_10',
+            layerName: 'layer_FocosAtivos_10',
+            pane: 'pane_FocosAtivos_10',
+            onEachFeature: pop_FocosAtivos_10,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_FocosAtivos_7_0(feature));
+                return L.circleMarker(latlng, style_FocosAtivos_10_0(feature));
             },
         });
-        var cluster_FocosAtivos_7 = new L.MarkerClusterGroup({showCoverageOnHover: false,
+        var cluster_FocosAtivos_10 = new L.MarkerClusterGroup({showCoverageOnHover: false,
             spiderfyDistanceMultiplier: 2});
-        cluster_FocosAtivos_7.addLayer(layer_FocosAtivos_7);
+        cluster_FocosAtivos_10.addLayer(layer_FocosAtivos_10);
 
-        bounds_group.addLayer(layer_FocosAtivos_7);
-        cluster_FocosAtivos_7.addTo(map);
+        bounds_group.addLayer(layer_FocosAtivos_10);
+        cluster_FocosAtivos_10.addTo(map);
         var osmGeocoder = new L.Control.Geocoder({
             collapsed: true,
             position: 'topleft',
@@ -761,7 +785,10 @@
         .title += 'Search for a place';
         var baseMaps = {};
         var overlaysTree = [
-            {label: '<img src="legend/FocosAtivos_7.png" /> Focos Ativos ', layer: cluster_FocosAtivos_7},
+            {label: '<img src="legend/FocosAtivos_10.png" /> Focos Ativos ', layer: cluster_FocosAtivos_10},
+            {label: "umidade MT", layer: layer_umidadeMT_9},
+            {label: "chuvas MT", layer: layer_chuvasMT_8},
+            {label: "Risco de fogo", layer: layer_Riscodefogo_7},
             {label: '<img src="legend/MT_UF_2022_6.png" /> MT_UF_2022', layer: layer_MT_UF_2022_6},
             {label: '<img src="legend/EventodeFogo_5.png" /> Evento de Fogo', layer: layer_EventodeFogo_5},
             {label: '<img src="legend/Aceiros_4.png" /> Aceiros', layer: layer_Aceiros_4},
@@ -830,6 +857,11 @@
             }  
         });       
         setBounds();
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
         </script>
     </body>
 </html>
