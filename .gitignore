@@ -1,0 +1,32 @@
+# Ignorar arquivos e pastas específicas
+node_modules/
+.env
+
+# Ignorar arquivos temporários do sistema
+.DS_Store
+Thumbs.db
+
+# Ignorar logs e arquivos temporários
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignorar os arquivos do sistema operacional
+*.swp
+*.swo
+*.bak
+*.tmp
+*.old
+
+# Ignorar arquivos gerados pelo IDE/editor
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Ignorar o mapa de origem do Leaflet
+# leaflet.js.map
+
+# Ignorar pastas ocultas como .git e .gitignore
+.git/
+.vercel
